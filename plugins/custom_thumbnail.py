@@ -71,7 +71,7 @@ async def show_thumb(bot, update):
             thumb_image_path = thumb_image_path
         else:
             thumb_image_path = None    
-    
+
     if thumb_image_path is not None:
         try:
             await bot.send_photo(
@@ -80,8 +80,8 @@ async def show_thumb(bot, update):
             )
         except:
             pass
-        
-    elif thumb_image_path is None:
+
+    else:
         await bot.send_message(
             chat_id=update.chat.id,
             text="no thumbnail found",

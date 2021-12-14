@@ -116,16 +116,13 @@ async def ddl_call_back(bot, update):
             duration = 0
             if tg_send_type != "file":
                 metadata = extractMetadata(createParser(download_directory))
-                if metadata is not None:
-                    if metadata.has("duration"):
-                        duration = metadata.get('duration').seconds
+                if metadata is not None and metadata.has("duration"):
+                    duration = metadata.get('duration').seconds
 
             if os.path.exists(thumb_image_path):
-                width = 0
                 height = 0
                 metadata = extractMetadata(createParser(thumb_image_path))
-                if metadata.has("width"):
-                    width = metadata.get("width")
+                width = metadata.get("width") if metadata.has("width") else 0
                 if metadata.has("height"):
                     height = metadata.get("height")
                 if tg_send_type == "vm":
@@ -142,7 +139,7 @@ async def ddl_call_back(bot, update):
                 thumb_image_path = None
 
             start_time = time.time()
-           
+
             if tg_send_type == "audio":
                 await bot.send_audio(
                     chat_id=update.message.chat.id,
@@ -267,24 +264,23 @@ File Size: {}""".format(url, humanbytes(total_length))
                         (total_length - downloaded) / speed) * 1000
                     estimated_total_time = elapsed_time + time_to_completion
                     try:
-                        current_message = """**Download Status**
+                                                current_message = """**Download Status**
 URL: {}
 File Size: {}
 Downloaded: {}
 ETA: {}""".format(
-    url,
-    humanbytes(total_length),
-    humanbytes(downloaded),
-    TimeFormatter(estimated_total_time)
-)
-                        if current_message != display_message:
-                            await bot.edit_message_text(
-                                chat_id,
-                                message_id,
-                                text=current_message
-                            )
-                            display_message = current_message
+                            url,
+                            humanbytes(total_length),
+                            humanbytes(downloaded),
+                            TimeFormatter(estimated_total_time)
+                        )
+                                                if current_message != display_message:
+                                                    await bot.edit_message_text(
+                                                        chat_id,
+                                                        message_id,
+                                                        text=current_message
+                                                    )
+                                                    display_message = current_message
                     except Exception as e:
                         logger.info(str(e))
-                        pass
         return await response.release()

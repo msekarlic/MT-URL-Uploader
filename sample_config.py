@@ -1,6 +1,8 @@
 import os
 
-class Config(object):
+
+
+class Config((object)):
 
     # get a token from @BotFather
     TG_BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
@@ -11,7 +13,7 @@ class Config(object):
     API_HASH = os.environ.get("API_HASH")
 
     # Array to store users who are authorized to use the bot
-    AUTH_USERS = set(int(x) for x in os.environ.get("AUTH_USERS", "").split())
+    AUTH_USERS = {int(x) for x in os.environ.get("AUTH_USERS", "").split()}
 
     # Bot User Name With Out @
     BOT_USERNAME = os.environ.get("BOT_USERNAME", "")
@@ -35,10 +37,10 @@ class Config(object):
     # proxy for accessing youtube-dl in GeoRestricted Areas
     # Get your own proxy from https://github.com/rg3/youtube-dl/issues/1091#issuecomment-230163061
     HTTP_PROXY = os.environ.get("HTTP_PROXY", "")
-    
+
     # Update channel for Force Subscribe
     UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL", "")
-    
+
     # Log channel for banning spammers
     LOG_CHANNEL = os.environ.get("LOG_CHANNEL", "")
 
@@ -47,7 +49,7 @@ class Config(object):
 
     # set timeout for subprocess
     PROCESS_MAX_TIMEOUT = int(os.environ.get("TIME_LIMIT"))
-    
+
     # dict to hold the ReQuest queue
     ADL_BOT_RQ = {}
 
